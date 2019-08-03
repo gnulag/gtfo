@@ -15,9 +15,9 @@ function tryLoadConfig() {
 
 const config = JSON.parse(tryLoadConfig())
 
-config.secure = config.protocol == 'ircs:'
-
 config.url = url.parse(config.url)
+
+config.secure = config.protocol === 'ircs:'
 
 config.url.username = (config.url.auth || '').split(':')[0]
 config.url.username = (config.url.auth || '').substring(0, config.url.auth.lastIndexOf(':'))
