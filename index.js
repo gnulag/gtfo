@@ -37,6 +37,8 @@ const client = new irc.Client(config.url.hostname, config.url.username, {
 client.kick = _.partial(client.send, 'kick').bind(client)
 client.names = _.partial(client.send, 'names').bind(client)
 
+const timers = {}
+
 function getChannel(channel) {
   return _.find(config.channels, { name: channel })
 }
@@ -44,8 +46,6 @@ function getChannel(channel) {
 function getReason(nick, interval) {
   return `${nick} should've spoken up, they've been kicked after being idle for ${interval} seconds`
 }
-
-const timers = {}
 
 function getRank(channel, nick, cb) {
   client.whois(nick, ({ channels }) => {
@@ -103,6 +103,19 @@ function removeTimer(channel, nick) {
 function removeMultiChannelTimers(nick, reason, channels) {
   channels.forEach(_.partial(removeTimer, channel))
 }
+
+client.on('registered', () => {
+  if (process.env.NICKSERV_PASSWORD) {
+    client.say('nickserv', `identify ${config.url.username} ${process.env.NICKSERV_PASSWORD}`)
+
+    setTimeout(() => {
+      // rejoin once id'd
+      config.channels.forEach(({ name }) => {
+        client.join(name)
+      })
+    }, 2500)
+  }
+})
 
 client.on('names', (channel, nicks) => {
   // happens on first join, start times for all of these boys
