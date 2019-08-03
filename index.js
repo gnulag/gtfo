@@ -17,7 +17,7 @@ const config = JSON.parse(tryLoadConfig())
 
 config.url = url.parse(config.url)
 
-config.secure = config.protocol === 'ircs:'
+config.secure = config.url.protocol === 'ircs:'
 
 config.url.username = (config.url.auth || '').split(':')[0]
 config.url.username = (config.url.auth || '').substring(0, config.url.auth.lastIndexOf(':'))
@@ -165,9 +165,6 @@ client.on('message', (nick, to, text, message) => {
         })
     }
   }
-  throttleNick(nick, () => {
-
-  })
 })
 
 const throttles = {}
