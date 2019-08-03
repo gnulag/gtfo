@@ -37,6 +37,7 @@ const client = new irc.Client(config.url.hostname, config.url.username, {
 client.kick = _.partial(client.send, 'kick').bind(client)
 client.names = _.partial(client.send, 'names').bind(client)
 
+let kickCount = 0
 const timers = {}
 
 function getChannel(channel) {
@@ -91,6 +92,7 @@ function resetTimer(channel, nick) {
         resetTimer(channel, nick)
         return
       }
+      kickCount++
       client.kick(channel, nick, getReason(nick, interval))
     })
   }, interval * 1000)
@@ -148,3 +150,33 @@ client.on('nick', (oldnick, newnick, channels) => {
 })
 
 client.on('error', _.partial(debug, 'error'))
+
+client.on('message', (nick, to, text, message) => {
+  const target = to === client.nick ? nick : to
+  if (text[0] === config.prefix) {
+    switch (text.slice(1).split(' ', 2)[0]) {
+      case "gtfo-stats":
+        throttleNick(nick, () => {
+          client.say(target, `${nick}: ${client.nick} is monitoring ${_.values(timers).length} channels and ${_.chain(timers).values().flatten().value().length} nicks. I've kicked ${kickCount} people so far.`)
+        })
+      case "gtfo-cpu":
+        throttleNick(nick, () => {
+          client.say(target, `${nick}: Running on ${process.platform} ${process.arch}. Uptime: ${process.uptime()}s. Node Version: ${process.version}. Memory usage: ${process.memoryUsage().rss} bytes.`)
+        })
+    }
+  }
+  throttleNick(nick, () => {
+
+  })
+})
+
+const throttles = {}
+
+function throttleNick(nick, cbMaybe) {
+  if (throttles[nick]) return
+  throttles[nick] = true
+  setTimeout(() => {
+    delete throttles[nick]
+  }, config.throttle)
+  cbMaybe()
+}

@@ -1,6 +1,8 @@
 {
   "url": "ircs://gtfo:@irc.snoonet.org/",
   "realname": "https://github.com/gnulag/gtfo",
+  "throttle": 1000,
+  "prefix": ".",
   "channels": [
     {
       "name": "#gtfo",
@@ -11,7 +13,10 @@
     },
     {
       "name": "#gnulag",
-      "interval": 1814400
+      "interval": 1814400,
+      "whitelist": [
+        "kStats"
+      ]
     }
   ]
 }
