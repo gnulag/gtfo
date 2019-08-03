@@ -131,7 +131,7 @@ client.on('names', (channel, nicks) => {
 })
 
 client.on('join', resetTimer)
-client.on('message#channel', _.ary(_.flip(resetTimer), 2))
+client.on('message#', _.ary(_.flip(resetTimer), 2))
 client.on('action', _.ary(_.flip(resetTimer), 2))
 
 client.on('part', removeTimer)
