@@ -87,7 +87,10 @@ function resetTimer(channel, nick) {
   timers[channel][nick] = setTimeout(() => {
     canKick(channel, nick, (can) => {
       debug('trying to kick', nick, 'from', channel, 'can we?', can)
-      if (!can) return;
+      if (!can) {
+        resetTimer(channel, nick)
+        return
+      }
       client.kick(channel, nick, getReason(nick, interval))
     })
   }, interval * 1000)
