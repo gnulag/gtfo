@@ -127,10 +127,6 @@ client.on('names', (channel, nicks) => {
   .map(_.partial(resetTimer, channel)).value()
 })
 
-client.on('+mode', (channel) => {
-  client.names(channel)
-})
-
 client.on('join', resetTimer)
 client.on('message#channel', _.ary(_.flip(resetTimer), 2))
 client.on('action', _.ary(_.flip(resetTimer), 2))
@@ -148,6 +144,4 @@ client.on('nick', (oldnick, newnick, channels) => {
   })
 })
 
-client.on('error', (message) => {
-  debug('error', message)
-})
+client.on('error', _.partial(debug, 'error'))
