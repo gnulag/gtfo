@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "IRC bot that has one mission: autokick lurkers.",
   "main": "index.js",
-  "repository": "https://github.com/flotwig/gtfo",
+  "repository": "https://github.com/gnulag/gtfo",
   "license": "MIT",
   "private": false,
   "dependencies": {

@@ -1,5 +1,5 @@
 {
-  "url": "ircs://gtfo:0@irc.snoonet.org/",
+  "url": "ircs://gtfo:@irc.snoonet.org/",
   "realname": "https://github.com/gnulag/gtfo",
   "channels": [
     {

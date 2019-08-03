@@ -132,8 +132,8 @@ client.on('+mode', (channel) => {
 })
 
 client.on('join', resetTimer)
-client.on('message#channel', _.flip(resetTimer))
-client.on('action', _.flip(resetTimer))
+client.on('message#channel', _.ary(_.flip(resetTimer), 2))
+client.on('action', _.ary(_.flip(resetTimer), 2))
 
 client.on('part', removeTimer)
 client.on('kick', removeTimer)
