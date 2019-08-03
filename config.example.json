@@ -1,0 +1,17 @@
+{
+  "url": "ircs://gtfo:0@irc.snoonet.org/",
+  "realname": "https://github.com/gnulag/gtfo",
+  "channels": [
+    {
+      "name": "#gtfo",
+      "interval": 10.0,
+      "whitelist": [
+        "flotwig"
+      ]
+    },
+    {
+      "name": "#gnulag",
+      "interval": 1814400
+    }
+  ]
+}

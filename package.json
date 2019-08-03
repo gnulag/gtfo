@@ -1,0 +1,13 @@
+{
+  "name": "gtfo",
+  "version": "1.0.0",
+  "description": "IRC bot that has one mission: autokick lurkers.",
+  "main": "index.js",
+  "repository": "https://github.com/flotwig/gtfo",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "irc": "^0.5.2",
+    "lodash": "^4.17.15"
+  }
+}
