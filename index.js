@@ -177,3 +177,7 @@ function throttleNick(nick, cbMaybe) {
   }, config.throttle)
   cbMaybe()
 }
+
+if (going to quit) {
+ return false; 
+}
